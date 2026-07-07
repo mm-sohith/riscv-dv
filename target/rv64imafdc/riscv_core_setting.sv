@@ -33,7 +33,8 @@ riscv_instr_name_t unsupported_instr[];
 riscv_instr_group_t supported_isa[$] = {RV32I, RV32M, RV64I, RV64M, RV32C, RV64C, RV32A, RV64A,
                                         RV32F, RV64F, RV32D, RV64D, RV32X};
 // Interrupt mode support
-mtvec_mode_t supported_interrupt_mode[$] = {DIRECT, VECTORED};
+// mtvec_mode_t supported_interrupt_mode[$] = {DIRECT, VECTORED};
+mtvec_mode_t supported_interrupt_mode[$] = {DIRECT};
 
 // The number of interrupt vectors to be generated, only used if VECTORED interrupt mode is
 // supported

@@ -1,33 +1,41 @@
-/* Copyright 2018 Google LLC
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http:*www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
 OUTPUT_ARCH( "riscv" )
 ENTRY(_start)
 
 SECTIONS
 {
   . = 0x80000000;
+  begin_signature = .;
   .text : { *(.text) }
-  . = ALIGN(0x1000);
+  
+
+
+  /* Pin .data so injected _self_check block never shifts anything below */
+  /* . = 0x80100000; */
+  
+  .data   : { *(.data)  }
   .tohost : { *(.tohost) }
   . = ALIGN(0x1000);
-  .page_table : { *(.page_table) }
-  .data : { *(.data) }
-  .user_stack : { *(.user_stack) }
-  .kernel_data : { *(.kernel_data) }
+  .page_table   : { *(.page_table)   }
+  .user_stack   : { *(.user_stack)   }
+  .kernel_data  : { *(.kernel_data)  }
   .kernel_stack : { *(.kernel_stack) }
-  .bss : { *(.bss) }
+  .bss          : { *(.bss)          }
+
+  /* Signature region — floats above kernel stack, that's fine */
+  . = ALIGN(8);
+  .region_0 : { *(.region_0) }
+  . = ALIGN(8);
+  .region_1 : { *(.region_1) }
+  . = ALIGN(8);
+
+  end_signature = .;
+  /* Reference region — pinned */
+  . = 0x90000000;
+  .ref : {
+    _spike_ref_start = .;
+    *(.data.ref)
+    _spike_ref_end = .;
+  }
+
   _end = .;
 }

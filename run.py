@@ -969,7 +969,7 @@ def load_config(args, cwd):
             args.isa = "rv32i_zicsr_zifencei"
         elif args.target == "rv64imc":
             args.mabi = "lp64"
-            args.isa = "rv64imc_zicsr_zifencei"
+            args.isa = "rv64imc"
         elif args.target == "rv64imcb":
             args.mabi = "lp64"
             args.isa = "rv64imcb_zicsr_zifencei"

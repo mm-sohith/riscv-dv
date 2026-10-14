@@ -15,7 +15,7 @@
 - iss: spike
   path_var: SPIKE_PATH
   cmd: >
-    <path_var>/bin/spike --log-commits --isa=<variant> --misaligned -l --hartids=16 +signature=$SPIKE_SIG +signature-granularity=8 <elf>
+    <path_var>/bin/spike --log-commits --isa=<variant>  -l --hartids=16 +signature=$SPIKE_SIG +signature-granularity=8 <elf>
 
 - iss: ovpsim
   path_var: OVPSIM_PATH
